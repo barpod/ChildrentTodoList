@@ -28,8 +28,8 @@ namespace ChildrenTodoList.Controllers
         {
             return new List<Child>
             {
-                new Child(new Guid().ToString(), "Gustaw", "Podlejski"),
-                new Child(new Guid().ToString(), "Julianna", "Podlejska")
+                new Child(Guid.NewGuid().ToString(), "Gustaw", "Podlejski"),
+                new Child(Guid.NewGuid().ToString(), "Julianna", "Podlejska")
             };
         }
     }
