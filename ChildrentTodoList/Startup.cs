@@ -39,7 +39,8 @@ namespace ChildrenTodoList
             app.UseSwagger();
             app.UseSwaggerUI(c => 
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Children Todo List");
+                var envName = env.IsProduction() ? "" : $" ({env.EnvironmentName})";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"Children Todo List{envName}");
             });
 
             app.UseHttpsRedirection();
