@@ -10,11 +10,6 @@ namespace ChildrenTodoList.Controllers
     [Route("[controller]")]
     public class ChildrenController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<ChildrenController> _logger;
 
         public ChildrenController(ILogger<ChildrenController> logger)

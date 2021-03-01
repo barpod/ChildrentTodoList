@@ -19,7 +19,8 @@ namespace ChildrentTodoList.Tests
         public void Setup()
         {
             _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<Startup>()
+                .UseEnvironment("Local"));
             _client = _server.CreateClient();
         }
 
