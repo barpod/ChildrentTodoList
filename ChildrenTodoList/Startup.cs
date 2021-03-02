@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ChildrenTodoList
 {
@@ -18,6 +20,13 @@ namespace ChildrenTodoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CosmosDBServiceOptions>(Configuration);
+            var docClient = new DocumentClient(
+                new Uri(Configuration[CosmosDbConfigurationConstants.DbUri]),
+                        Configuration[CosmosDbConfigurationConstants.DbKey]);
+            services.AddSingleton(docClient);
+
+            services.AddScoped<Services.IChildrenDbService, Services.ChildrenCosmosDbService>();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

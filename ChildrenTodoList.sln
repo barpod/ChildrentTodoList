@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenTodoList", "ChildrentTodoList\ChildrenTodoList.csproj", "{E04BFC2D-B4C0-4165-AAF9-261EE4754430}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenTodoList", "ChildrenTodoList\ChildrenTodoList.csproj", "{E04BFC2D-B4C0-4165-AAF9-261EE4754430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrentTodoList.Tests", "ChildrentTodoList.Tests\ChildrentTodoList.Tests.csproj", "{EA8538F1-061B-4FAC-91AD-CC635AD36593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenTodoList.Tests", "ChildrenTodoList.Tests\ChildrenTodoList.Tests.csproj", "{EA8538F1-061B-4FAC-91AD-CC635AD36593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
