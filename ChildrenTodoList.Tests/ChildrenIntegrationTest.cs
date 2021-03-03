@@ -64,7 +64,6 @@ namespace ChildrenTodoList.Tests
             return configurationBuilder
                 .SetBasePath(TestContext.CurrentContext.TestDirectory)
                 .AddJsonFile("appsettings.Local.json", optional: true)
-                .AddUserSecrets("e3dfcccf-0cb3-423a-b302-e3e92e95c128")
                 .AddEnvironmentVariables();
         }
 
@@ -72,22 +71,10 @@ namespace ChildrenTodoList.Tests
         public async Task PostShouldAddChildrenToTheDb()
         {
             var model = new ChildInput("LastName", "FirstName");
-            HttpResponseMessage postResponse = await _client.PostAsync(
-                "/api/children", 
-                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"));
-            var postedChild = JsonSerializer.Deserialize<Child>(
-                await postResponse.Content.ReadAsStringAsync(), 
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }); 
-            HttpResponseMessage httpResponseMessage = await _client.GetAsync($"/api/children/{postedChild.Id}");
-            var gotChild = JsonSerializer.Deserialize<Child>(
-                await httpResponseMessage.Content.ReadAsStringAsync(), 
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+            var postedChild = await _client.PostAsync( "/api/children",
+                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"))
+                .DeserializeAsync<Child>();
+            var gotChild = await _client.GetAsync($"/api/children/{postedChild.Id}").DeserializeAsync<Child>();
             Assert.AreEqual(gotChild, postedChild);
         }
     }
