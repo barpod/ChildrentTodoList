@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using NUnit.Framework;
+using ChildrenTodoList.Services.CosmosDb;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChildrenTodoList.Tests
 {
@@ -71,11 +74,20 @@ namespace ChildrenTodoList.Tests
         public async Task PostShouldAddChildrenToTheDb()
         {
             var model = new ChildInput("LastName", "FirstName");
-            var postedChild = await _client.PostAsync( "/api/children",
-                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"))
-                .DeserializeAsync<Child>();
+            var postedChild = await _client.PostAndDeserializeAsync<ChildInput, Child>("/api/children", model);
             var gotChild = await _client.GetAsync($"/api/children/{postedChild.Id}").DeserializeAsync<Child>();
             Assert.AreEqual(gotChild, postedChild);
+        }
+
+        [Test]
+        public async Task GetShouldReturnAllChildren()
+        {
+            var postedChild1 = await _client.PostAndDeserializeAsync<ChildInput, Child>(
+                "/api/children", new ChildInput("LastName1", "FirstName1"));
+            var postedChild2 = await _client.PostAndDeserializeAsync<ChildInput, Child>(
+                "/api/children", new ChildInput("LastName2", "FirstName2"));
+            var children = await _client.GetAsync($"/api/children/").DeserializeAsync<IEnumerable<Child>>();
+            CollectionAssert.AreEquivalent(new[] { postedChild1, postedChild2 }, children);
         }
     }
 }

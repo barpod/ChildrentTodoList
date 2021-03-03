@@ -1,6 +1,6 @@
 ﻿using ChildrenTodoList.Models;
 
-namespace ChildrenTodoList.Services
+namespace ChildrenTodoList.Services.CosmosDb
 {
     public static class CosmosDbChildExtensions
     {

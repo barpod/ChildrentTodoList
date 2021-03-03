@@ -1,10 +1,11 @@
 ﻿using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChildrenTodoList.Tests
 {
-    public static class HttpResponseMessageExtension
+    public static class TestExtensions
     {
         public static async Task<T> DeserializeAsync<T>(this HttpResponseMessage response)
         {
@@ -19,6 +20,13 @@ namespace ChildrenTodoList.Tests
         public static async Task<T> DeserializeAsync<T>(this Task<HttpResponseMessage> responseTask)
         {
             return await DeserializeAsync<T>(await responseTask); ;
+        }
+
+        public static async Task<TOutput> PostAndDeserializeAsync<TInput, TOutput>(this HttpClient httpClient, string uri, TInput model)
+        {
+            return await httpClient.PostAsync( uri,
+                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"))
+                .DeserializeAsync<TOutput>();
         }
     }
 }

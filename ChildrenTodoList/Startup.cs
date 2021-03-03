@@ -1,3 +1,4 @@
+using ChildrenTodoList.Services.CosmosDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.Documents.Client;
@@ -26,7 +27,7 @@ namespace ChildrenTodoList
                         Configuration[CosmosDbConfigurationConstants.DbKey]);
             services.AddSingleton(docClient);
 
-            services.AddScoped<Services.IChildrenDbService, Services.ChildrenCosmosDbService>();
+            services.AddScoped<Services.IChildrenDbService, ChildrenCosmosDbService>();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

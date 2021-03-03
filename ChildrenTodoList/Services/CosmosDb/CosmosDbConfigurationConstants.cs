@@ -1,4 +1,4 @@
-namespace ChildrenTodoList
+namespace ChildrenTodoList.Services.CosmosDb
 {
     public class CosmosDbConfigurationConstants
     {

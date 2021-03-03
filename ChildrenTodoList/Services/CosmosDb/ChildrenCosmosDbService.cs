@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ChildrenTodoList.Services
+namespace ChildrenTodoList.Services.CosmosDb
 {
     public class ChildrenCosmosDbService : IChildrenDbService
     {
@@ -12,7 +14,7 @@ namespace ChildrenTodoList.Services
         private readonly string _containerName;
         private readonly DocumentClient _documentClient;
 
-        public ChildrenCosmosDbService( DocumentClient documentClient)
+        public ChildrenCosmosDbService(DocumentClient documentClient)
         {
             _documentClient = documentClient;
             _dbName = "ChildrenTodoListDb";
@@ -32,8 +34,20 @@ namespace ChildrenTodoList.Services
         {
             var getDocUri = UriFactory.CreateDocumentUri(_dbName, _containerName, id);
             DocumentResponse<Child> documentResponse = await _documentClient.ReadDocumentAsync<Child>(
-                getDocUri, new RequestOptions { PartitionKey = new PartitionKey(Undefined.Value) } );
+                getDocUri, new RequestOptions { PartitionKey = new PartitionKey(Undefined.Value) });
             return documentResponse.Document;
+        }
+
+        public async Task<IEnumerable<Child>> GetChildrenAsync()
+        {
+            var childrenCollectionUri = UriFactory.CreateDocumentCollectionUri(_dbName, _containerName);
+            var feedResponses = await _documentClient.ReadDocumentFeedAsync(childrenCollectionUri);
+            var children = new List<Child>();
+            foreach(var item in feedResponses)
+            {
+                children.Add((Child)item);
+            }
+            return children;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChildrenTodoList.Models;
 using ChildrenTodoList.Services;
@@ -21,10 +22,17 @@ namespace ChildrenTodoList.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<JsonResult> GetAsync(String id)
+        public async Task<JsonResult> GetChildAsync(String id)
         {
             Child child = await _childrenDbService.GetChildAsync(id);
             return new JsonResult(child);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetChildrenAsync()
+        {
+            IEnumerable<Child> children = await _childrenDbService.GetChildrenAsync();
+            return new JsonResult(children);
         }
 
         [HttpPost]
