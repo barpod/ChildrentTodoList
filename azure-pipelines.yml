@@ -23,6 +23,8 @@ jobs:
     displayName: 'Run Azure Cosmos DB Emulator'
   - task: DotNetCoreCLI@2
     displayName: dotnet test
+    env:
+      CosmosDbUri: $(CosmosDbEmulator.Endpoint)
     inputs:
       command: test
   - task: DotNetCoreCLI@2
