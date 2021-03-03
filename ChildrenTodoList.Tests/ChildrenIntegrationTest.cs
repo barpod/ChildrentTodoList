@@ -49,9 +49,9 @@ namespace ChildrenTodoList.Tests
         [TearDown]
         public void Teardown()
         {
-            _childContainerResponse.Container.DeleteContainerAsync();
-            _todoListTaskContainerResponse.Container.DeleteContainerAsync();
-            _cosmosClient.Dispose();
+            //_childContainerResponse.Container.DeleteContainerAsync();
+            //_todoListTaskContainerResponse.Container.DeleteContainerAsync();
+            //_cosmosClient.Dispose();
         }
 
         public static IConfigurationBuilder GetLocalAppSettings()
