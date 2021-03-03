@@ -19,6 +19,8 @@ jobs:
     vmImage: vs2017-win2016
   steps:
   - checkout: self
+  - task: azure-cosmosdb.emulator-public-preview.run-cosmosdbemulatorcontainer.CosmosDbEmulator@2
+    displayName: 'Run Azure Cosmos DB Emulator'
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
