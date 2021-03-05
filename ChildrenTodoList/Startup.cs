@@ -28,6 +28,7 @@ namespace ChildrenTodoList
             services.AddSingleton(docClient);
 
             services.AddScoped<Services.IChildrenDbService, ChildrenCosmosDbService>();
+            services.AddScoped<Services.ITasksDbService, TasksCosmosDbService>();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

@@ -22,7 +22,7 @@ namespace ChildrenTodoList.Tests
             return await DeserializeAsync<T>(await responseTask); ;
         }
 
-        public static async Task<TOutput> PostAndDeserializeAsync<TInput, TOutput>(this HttpClient httpClient, string uri, TInput model)
+        public static async Task<TOutput> PostAndDeserializeAsync<TOutput>(this HttpClient httpClient, string uri, object model)
         {
             return await httpClient.PostAsync( uri,
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"))
