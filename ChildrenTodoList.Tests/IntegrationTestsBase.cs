@@ -15,10 +15,9 @@ namespace ChildrenTodoList.Tests
         protected HttpClient _client;
         private IConfiguration _configuration;
         private CosmosClient _cosmosClient;
-        private readonly DatabaseResponse _databaseResponse;
+        private DatabaseResponse _databaseResponse;
 
-        [SetUp]
-        public async System.Threading.Tasks.Task SetupAsync()
+        public async Task SetupAsync()
         {
             IConfigurationBuilder configurationBuilder = GetLocalAppSettings();
             _configuration = configurationBuilder.Build();
@@ -35,10 +34,10 @@ namespace ChildrenTodoList.Tests
                 _configuration[CosmosDbConfigurationConstants.DbUri],
                 _configuration[CosmosDbConfigurationConstants.DbKey]);
 
-            var databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync("ChildrenTodoListDb", 10000);
+            _databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync("ChildrenTodoListDb", 10000);
 
-            await databaseResponse.Database.CreateContainerIfNotExistsAsync(ChildrenCosmosDbService.ChildrenContainerName , "/PartitionKey");
-            await databaseResponse.Database.CreateContainerIfNotExistsAsync(TasksCosmosDbService.OneTimeTasksContainerName, "/TaskId");
+            await _databaseResponse.Database.CreateContainerIfNotExistsAsync(ChildrenCosmosDbService.ChildrenContainerName , "/PartitionKey");
+            await _databaseResponse.Database.CreateContainerIfNotExistsAsync(TasksCosmosDbService.OneTimeTasksContainerName, "/TaskId");
         }
 
         public static IConfigurationBuilder GetLocalAppSettings()
@@ -54,7 +53,6 @@ namespace ChildrenTodoList.Tests
                 .AddEnvironmentVariables();
         }
 
-        [TearDown]
         public async Task TeardownAsync()
         {
             await _databaseResponse.Database.DeleteAsync();

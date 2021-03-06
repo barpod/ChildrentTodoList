@@ -9,13 +9,13 @@ namespace ChildrenTodoList.Tests
     public class TasksIntegrationTest : IntegrationTestsBase
     {
         [SetUp]
-        public new async Task SetupAsync()
+        public async Task Setup()
         {
             await SetupAsync();
         }
 
         [TearDown]
-        public new async Task TeardownAsync()
+        public async Task Teardown()
         {
             await TeardownAsync();
         }
