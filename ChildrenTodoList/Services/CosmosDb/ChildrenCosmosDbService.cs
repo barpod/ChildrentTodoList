@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace ChildrenTodoList.Services.CosmosDb
 {
@@ -12,10 +13,10 @@ namespace ChildrenTodoList.Services.CosmosDb
         private readonly string _dbName;
         private readonly DocumentClient _documentClient;
 
-        public ChildrenCosmosDbService(DocumentClient documentClient)
+        public ChildrenCosmosDbService(DocumentClient documentClient, IOptions<CosmosDBServiceOptions> options)
         {
             _documentClient = documentClient;
-            _dbName = "ChildrenTodoListDb";
+            _dbName = options.Value.CosmosDbName;
         }
 
         public async Task<Child> AddChildAsync(ChildInput childInput)

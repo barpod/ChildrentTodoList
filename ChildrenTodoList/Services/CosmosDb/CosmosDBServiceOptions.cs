@@ -5,8 +5,8 @@ namespace ChildrenTodoList
     /// </summary>
     public class CosmosDBServiceOptions
     {
-        public string CosmosDbUri { get; set; }
-        public string CosmosDbKey { get; set; }
+        public string CosmosDbName { get; set; }
+
     }
 }
 

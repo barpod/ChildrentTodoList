@@ -34,7 +34,8 @@ namespace ChildrenTodoList.Tests
                 _configuration[CosmosDbConfigurationConstants.DbUri],
                 _configuration[CosmosDbConfigurationConstants.DbKey]);
 
-            _databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync("ChildrenTodoListDb", 10000);
+            _databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(
+                _configuration[CosmosDbConfigurationConstants.DbName], 10000);
 
             await _databaseResponse.Database.CreateContainerIfNotExistsAsync(ChildrenCosmosDbService.ChildrenContainerName , "/PartitionKey");
             await _databaseResponse.Database.CreateContainerIfNotExistsAsync(TasksCosmosDbService.OneTimeTasksContainerName, "/TaskId");
@@ -49,7 +50,7 @@ namespace ChildrenTodoList.Tests
         {
             return configurationBuilder
                 .SetBasePath(TestContext.CurrentContext.TestDirectory)
-                .AddJsonFile("appsettings.Local.json", optional: true)
+                .AddJsonFile("appsettings.Tests.json", optional: true)
                 .AddEnvironmentVariables();
         }
 
